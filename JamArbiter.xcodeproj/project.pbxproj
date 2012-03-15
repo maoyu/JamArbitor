@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E68058F81511C2B60055B06B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68058F71511C2B60055B06B /* UIKit.framework */; };
+		E68058FA1511C2B60055B06B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68058F91511C2B60055B06B /* Foundation.framework */; };
+		E68058FC1511C2B60055B06B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68058FB1511C2B60055B06B /* CoreGraphics.framework */; };
+		E68059021511C2B60055B06B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E68059001511C2B60055B06B /* InfoPlist.strings */; };
+		E68059041511C2B60055B06B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E68059031511C2B60055B06B /* main.m */; };
+		E68059081511C2B60055B06B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E68059071511C2B60055B06B /* AppDelegate.m */; };
+		E680590B1511C2B60055B06B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E680590A1511C2B60055B06B /* FirstViewController.m */; };
+		E680590D1511C2B60055B06B /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = E680590C1511C2B60055B06B /* first.png */; };
+		E680590F1511C2B60055B06B /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E680590E1511C2B60055B06B /* first@2x.png */; };
+		E68059121511C2B60055B06B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E68059111511C2B60055B06B /* SecondViewController.m */; };
+		E68059141511C2B60055B06B /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = E68059131511C2B60055B06B /* second.png */; };
+		E68059161511C2B60055B06B /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E68059151511C2B60055B06B /* second@2x.png */; };
+		E68059191511C2B60055B06B /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E68059171511C2B60055B06B /* FirstViewController.xib */; };
+		E680591C1511C2B70055B06B /* SecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E680591A1511C2B70055B06B /* SecondViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E68058F31511C2B60055B06B /* JamArbiter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JamArbiter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E68058F71511C2B60055B06B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E68058F91511C2B60055B06B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E68058FB1511C2B60055B06B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E68058FF1511C2B60055B06B /* JamArbiter-Info.plist */ = {isa = PBXFileReference; path = "JamArbiter-Info.plist"; sourceTree = "<group>"; };
+		E68059011511C2B60055B06B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E68059031511C2B60055B06B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E68059051511C2B60055B06B /* JamArbiter-Prefix.pch */ = {isa = PBXFileReference; path = "JamArbiter-Prefix.pch"; sourceTree = "<group>"; };
+		E68059061511C2B60055B06B /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		E68059071511C2B60055B06B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E68059091511C2B60055B06B /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		E680590A1511C2B60055B06B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		E680590C1511C2B60055B06B /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		E680590E1511C2B60055B06B /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		E68059101511C2B60055B06B /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		E68059111511C2B60055B06B /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		E68059131511C2B60055B06B /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		E68059151511C2B60055B06B /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		E68059181511C2B60055B06B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
+		E680591B1511C2B70055B06B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E68058F01511C2B60055B06B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68058F81511C2B60055B06B /* UIKit.framework in Frameworks */,
+				E68058FA1511C2B60055B06B /* Foundation.framework in Frameworks */,
+				E68058FC1511C2B60055B06B /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E68058E81511C2B50055B06B = {
+			isa = PBXGroup;
+			children = (
+				E68058FD1511C2B60055B06B /* JamArbiter */,
+				E68058F61511C2B60055B06B /* Frameworks */,
+				E68058F41511C2B60055B06B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E68058F41511C2B60055B06B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E68058F31511C2B60055B06B /* JamArbiter.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E68058F61511C2B60055B06B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E68058F71511C2B60055B06B /* UIKit.framework */,
+				E68058F91511C2B60055B06B /* Foundation.framework */,
+				E68058FB1511C2B60055B06B /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E68058FD1511C2B60055B06B /* JamArbiter */ = {
+			isa = PBXGroup;
+			children = (
+				E68059061511C2B60055B06B /* AppDelegate.h */,
+				E68059071511C2B60055B06B /* AppDelegate.m */,
+				E68059091511C2B60055B06B /* FirstViewController.h */,
+				E680590A1511C2B60055B06B /* FirstViewController.m */,
+				E680590C1511C2B60055B06B /* first.png */,
+				E680590E1511C2B60055B06B /* first@2x.png */,
+				E68059101511C2B60055B06B /* SecondViewController.h */,
+				E68059111511C2B60055B06B /* SecondViewController.m */,
+				E68059131511C2B60055B06B /* second.png */,
+				E68059151511C2B60055B06B /* second@2x.png */,
+				E68059171511C2B60055B06B /* FirstViewController.xib */,
+				E680591A1511C2B70055B06B /* SecondViewController.xib */,
+				E68058FE1511C2B60055B06B /* Supporting Files */,
+			);
+			path = JamArbiter;
+			sourceTree = "<group>";
+		};
+		E68058FE1511C2B60055B06B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E68058FF1511C2B60055B06B /* JamArbiter-Info.plist */,
+				E68059001511C2B60055B06B /* InfoPlist.strings */,
+				E68059031511C2B60055B06B /* main.m */,
+				E68059051511C2B60055B06B /* JamArbiter-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E68058F21511C2B60055B06B /* JamArbiter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E680591F1511C2B70055B06B /* Build configuration list for PBXNativeTarget "JamArbiter" */;
+			buildPhases = (
+				E68058EF1511C2B60055B06B /* Sources */,
+				E68058F01511C2B60055B06B /* Frameworks */,
+				E68058F11511C2B60055B06B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JamArbiter;
+			productName = JamArbiter;
+			productReference = E68058F31511C2B60055B06B /* JamArbiter.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E68058EA1511C2B50055B06B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = E68058ED1511C2B60055B06B /* Build configuration list for PBXProject "JamArbiter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E68058E81511C2B50055B06B;
+			productRefGroup = E68058F41511C2B60055B06B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E68058F21511C2B60055B06B /* JamArbiter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E68058F11511C2B60055B06B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68059021511C2B60055B06B /* InfoPlist.strings in Resources */,
+				E680590D1511C2B60055B06B /* first.png in Resources */,
+				E680590F1511C2B60055B06B /* first@2x.png in Resources */,
+				E68059141511C2B60055B06B /* second.png in Resources */,
+				E68059161511C2B60055B06B /* second@2x.png in Resources */,
+				E68059191511C2B60055B06B /* FirstViewController.xib in Resources */,
+				E680591C1511C2B70055B06B /* SecondViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E68058EF1511C2B60055B06B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68059041511C2B60055B06B /* main.m in Sources */,
+				E68059081511C2B60055B06B /* AppDelegate.m in Sources */,
+				E680590B1511C2B60055B06B /* FirstViewController.m in Sources */,
+				E68059121511C2B60055B06B /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E68059001511C2B60055B06B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E68059011511C2B60055B06B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E68059171511C2B60055B06B /* FirstViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E68059181511C2B60055B06B /* en */,
+			);
+			name = FirstViewController.xib;
+			sourceTree = "<group>";
+		};
+		E680591A1511C2B70055B06B /* SecondViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E680591B1511C2B70055B06B /* en */,
+			);
+			name = SecondViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E680591D1511C2B70055B06B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E680591E1511C2B70055B06B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E68059201511C2B70055B06B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JamArbiter/JamArbiter-Prefix.pch";
+				INFOPLIST_FILE = "JamArbiter/JamArbiter-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E68059211511C2B70055B06B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JamArbiter/JamArbiter-Prefix.pch";
+				INFOPLIST_FILE = "JamArbiter/JamArbiter-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E68058ED1511C2B60055B06B /* Build configuration list for PBXProject "JamArbiter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E680591D1511C2B70055B06B /* Debug */,
+				E680591E1511C2B70055B06B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E680591F1511C2B70055B06B /* Build configuration list for PBXNativeTarget "JamArbiter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E68059201511C2B70055B06B /* Debug */,
+				E68059211511C2B70055B06B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E68058EA1511C2B50055B06B /* Project object */;
+}
