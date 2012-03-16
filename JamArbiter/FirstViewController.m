@@ -83,21 +83,47 @@
     return YES;
 }
 
+- (void)notReady:(NSString *)error{
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"错误" 
+                                            message:error delegate:self 
+                                           cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    [alert release];
+}
+
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if (motion == UIEventSubtypeMotionShake) {
         NSLog(@"got shake"); 
         AppDelegate * delegate = [AppDelegate delegate];
+        NSInteger index = [self.segment selectedSegmentIndex];
+        NSString * jamState = [self.segment titleForSegmentAtIndex:index];
+        if (jamState == nil) {
+            [self notReady:@"交通状态未设置"];
+            return;
+        }
+        NSString * sender = [delegate.dataes parameter:SINA_WEIBO_SENDER_KEY];
+        if (nil == sender) {
+            [self notReady:@"发送者未设置"];
+            return;
+        }
         NSString * receiver = [delegate.dataes parameter:RECEIVER_KEY];
-        NSString * atWhom;
-        if (! [receiver hasPrefix:@"@"]) {
-            atWhom = [NSString stringWithFormat:@"@%@", receiver];
-        }else{
-            atWhom = receiver;
+        if (nil == receiver) {
+            [self notReady:@"通知对象未设置"];
+            return;
         }
         
-        NSString * jamState = [self.segment titleForSegmentAtIndex:[self.segment selectedSegmentIndex]];
-        NSString * contents = [NSString stringWithFormat:@"测试：%@ 请开车出来一起闹他 %@", jamState, atWhom];
-        [[[AppDelegate delegate] sinaWeibo] sendWeibo:contents];
+        NSString * safeReceiver;
+        if (! [receiver hasPrefix:@"@"]) {
+            safeReceiver = [NSString stringWithFormat:@"@%@", receiver];
+        }else{
+            safeReceiver = receiver;
+        }
+        
+        NSString * text = [NSString stringWithFormat:@"测试：%@ 召唤 %@", 
+                               jamState, safeReceiver];
+        delegate.sinaWeibo.weiboText = text;
+        
+        [delegate.locationService startStandardLocationServcie];
     }else{
         NSLog(@"got something not shake");
     }
@@ -132,10 +158,6 @@
     NSString * text = nil;
     UITableViewCell * cell = nil;
     if (indexPath.section == 0) {
-        text = [[[AppDelegate delegate] dataes] parameter:JAM_STATE_KEY];
-        if (nil == text) {
-            self.segment.selectedSegmentIndex = 0;
-        }
         cell = self.cell0;
     }else if(indexPath.section == 1){
         text = [[[AppDelegate delegate] dataes] parameter:SINA_WEIBO_SENDER_KEY];

@@ -15,13 +15,16 @@
 #define ANNOTATIONS                             @"annotations"
 #define ANNOTATIONS_SEND_WEIBO                  @"send_weibo"
 
-@interface SinaWeiboManager : NSObject <WBEngineDelegate>
+@interface SinaWeiboManager : NSObject <WBEngineDelegate, WBRequestDelegate>
 
 @property (strong, nonatomic) WBEngine * sinaWeiboEngine;
+@property (nonatomic) double longitude;
+@property (nonatomic) double latitude;
+@property (strong, nonatomic) NSString * weiboText;
 
 -(id)init;
 -(void)sinaWeiboLogin:(UIViewController *)topViewController;
 -(void)requestScreenName;
--(void)sendWeibo:(NSString *)text;
+-(BOOL)sendWeibo;
 
 @end

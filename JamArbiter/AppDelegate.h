@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DataStore.h"
 #import "SinaWeiboManager.h"
+#import "LocationManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) UINavigationController * firstNavigation;
 @property (strong, nonatomic) DataStore * dataes;
 @property (strong, nonatomic) SinaWeiboManager * sinaWeibo;
+@property (strong, nonatomic) LocationManager * locationService;
 
 +(AppDelegate *)delegate;
 

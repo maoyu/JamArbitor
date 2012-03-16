@@ -21,6 +21,7 @@
 @synthesize firstNavigation = _firstNavigation;
 @synthesize dataes = _dataes;
 @synthesize sinaWeibo = _sinaWeibo;
+@synthesize locationService = _locationService;
 
 - (void)dealloc
 {
@@ -28,6 +29,7 @@
     [_tabBarController release];
     [_firstNavigation release];
     [_sinaWeibo release];
+    [_locationService release];
     [super dealloc];
 }
 
@@ -36,9 +38,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
     self.dataes = [[[DataStore alloc] initFromFile] autorelease];
     self.sinaWeibo = [[[SinaWeiboManager alloc] init] autorelease];
+    self.locationService = [[[LocationManager alloc] init] autorelease];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.

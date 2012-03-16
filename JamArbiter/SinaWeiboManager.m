@@ -7,15 +7,18 @@
 //
 
 #import "SinaWeiboManager.h"
-#import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 
 @implementation SinaWeiboManager
 
 @synthesize sinaWeiboEngine = _sinaWeiboEngine;
+@synthesize longitude = _longitude;
+@synthesize latitude = _latitude;
+@synthesize weiboText = _weiboText;
 
 - (void)dealloc{
     [_sinaWeiboEngine release];
+    [_weiboText release];
     [super dealloc];
 }
 
@@ -24,7 +27,7 @@
         WBEngine * engine = [[WBEngine alloc] initWithAppKey:kSinaWeiboAppKey appSecret:kSinaWeiboAppSecret];
         [engine setDelegate:self];
         [engine setRedirectURI:@"http://"];
-        [engine setIsUserExclusive:NO];
+        [engine setIsUserExclusive:YES];
         self.sinaWeiboEngine = engine;
         [engine release];
     }
@@ -53,17 +56,25 @@
                                    httpHeaderFields:nil];
 }
 
--(void)sendWeibo:(NSString *)text{    
-    if (nil == [[[AppDelegate delegate] dataes] parameter:SINA_WEIBO_SENDER_KEY]) {
-        NSLog(@"not certified");
-        return;
+-(NSString *)floatToNSString:(double)number{
+    NSString * string = [NSString stringWithFormat:@"%f", number];
+    if ([string hasPrefix:@"-"]) {
+        return string;
+    }else{
+        NSString * positiveString = [NSString stringWithFormat:@"+%@", string];
+        return positiveString;
     }
+}
 
-    // 震动提示。
-    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+-(BOOL)sendWeibo{    
+    NSString * tude;
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:4];
     
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:2];
-    [params setObject:text forKey:@"status"];    
+    [params setObject:self.weiboText forKey:@"status"]; 
+    tude = [self floatToNSString:self.latitude];
+    [params setObject:tude  forKey:@"lat"];
+    tude = [self floatToNSString:self.longitude];
+    [params setObject:tude forKey:@"long"];
     // eee, 打开后，发送失败。
     //[params setObject:ANNOTATIONS_SEND_WEIBO forKey:ANNOTATIONS];
     
@@ -73,6 +84,7 @@
                         params:params
                         postDataType:kWBRequestPostDataTypeNormal
                         httpHeaderFields:nil];
+    return YES;
 }
 
 #pragma mark - WBEngineDelegate
@@ -82,7 +94,11 @@
     AppDelegate * delegate = [AppDelegate delegate];
     if ([delegate.dataes parameter:SINA_WEIBO_SENDER_KEY] == nil) {
         [self requestScreenName];    
-    }    
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"不用" message:@"已经设置" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 -(void)engineDidLogIn:(WBEngine *)engine{
@@ -104,11 +120,22 @@
             NSLog(@"got screen_name: %@", screenName);    
         }
         
+        NSString * geoEnabled = [dict objectForKey:@"geo_enabled"];
+        if (geoEnabled) {
+            // TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
+            NSLog(@"%@", geoEnabled);
+        }
+        
         NSString * annotations = [dict objectForKey:ANNOTATIONS];
         if ([annotations isEqualToString:ANNOTATIONS_SEND_WEIBO]) {
             NSLog(@"weibo 发送成功");
         }
     }
+}
+
+#pragma mark - WBRequestDelegate
+-(void)request:(WBRequest *)request didFailWithError:(NSError *)error{
+    NSLog(@"request error: %@", [error description]);
 }
 
 @end

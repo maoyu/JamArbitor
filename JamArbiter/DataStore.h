@@ -21,10 +21,8 @@
 #define DEFAULT_DISTANCE_FILTER              100.0
 #define DEFAULT_ACCURACY                     kCLLocationAccuracyKilometer
 
-#define JAM_STATE_KEY                       @"jam-state-key"
 #define RECEIVER_KEY                        @"receiver-key"
 #define SINA_WEIBO_SENDER_KEY               @"sina-weibo-sender-key"
-
 
 @interface DataStore : NSObject
 
