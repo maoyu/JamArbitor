@@ -12,30 +12,48 @@
 
 #import "SecondViewController.h"
 
+#import "DataStore.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
+@synthesize firstNavigation = _firstNavigation;
+@synthesize dataes = _dataes;
+@synthesize sinaWeibo = _sinaWeibo;
 
 - (void)dealloc
 {
     [_window release];
     [_tabBarController release];
+    [_firstNavigation release];
+    [_sinaWeibo release];
     [super dealloc];
+}
+
++ (AppDelegate *)delegate{
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.dataes = [[[DataStore alloc] initFromFile] autorelease];
+    self.sinaWeibo = [[[SinaWeiboManager alloc] init] autorelease];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     UIViewController *viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
+    UINavigationController * controller = [[[UINavigationController alloc] initWithRootViewController:viewController1] autorelease];
+    self.firstNavigation = controller;
+    
     UIViewController *viewController2 = [[[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil] autorelease];
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:self.firstNavigation, viewController2, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -47,6 +65,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [self.dataes save];  
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
