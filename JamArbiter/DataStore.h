@@ -8,35 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-#define MONITORING_KEY                       @"monitoring"
-#define SIGNIFICENT_CHANGE_LOCATION_SERVICE  @"significent-change"
-#define STANDARD_LOCATION_SERVICE            @"stardard-location-service"
-
-#define ACCURACY_KEY                         @"accuracy"
-#define DISTANCE_FILTER_KEY                  @"distance-filter"
-
-#define DESCRIPTION_KEY                      @"discription"
-#define DETAILS_KEY                          @"details"
-
-#define DEFAULT_DISTANCE_FILTER              100.0
-#define DEFAULT_ACCURACY                     kCLLocationAccuracyKilometer
-
+#define SINA_WEIBO_SENDER_NAME_KEY          @"sina-weibo-sender-key"
 #define RECEIVER_KEY                        @"receiver-key"
-#define SINA_WEIBO_SENDER_KEY               @"sina-weibo-sender-key"
+
+#define ACTIVITY_PROCESS_KEY                @"activity-process"
+#define ACTIVITY_RESULT_KEY                 @"activity-result"
+
+#define RESULT_FAILED                       @"failed"
+#define RESULT_SUCCESSFUL                   @"successful"
 
 @interface DataStore : NSObject
 
-@property (strong, nonatomic) NSMutableArray * locations;
-@property (strong, nonatomic) NSMutableArray * standardLocations;
 @property (strong, nonatomic) NSMutableDictionary * parameters;
+@property (strong, nonatomic) NSMutableArray * logs;
+@property (strong, nonatomic) NSMutableDictionary * activity;
 
 -(id)initFromFile;
 -(void)save;
 
--(NSString *)monitoring;
--(void)setMonitoringValue:(NSString *)value;
-
 -(NSString *)parameter:(NSString *)key;
 -(void)setParameter:(NSString *)key withValue:(NSString *)value;
+
+-(void)resetActivity;
+-(void)addActivity:(NSString *)activity;
+-(void)addFailedActivity:(NSString *)activity;
+-(void)addSuccessfulActivity:(NSString*)activity;
+-(BOOL)activityResult;
 
 @end

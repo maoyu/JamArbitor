@@ -19,6 +19,7 @@
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 @synthesize firstNavigation = _firstNavigation;
+@synthesize secondNavigation = _secondNavigation;
 @synthesize dataes = _dataes;
 @synthesize sinaWeibo = _sinaWeibo;
 @synthesize locationService = _locationService;
@@ -28,6 +29,7 @@
     [_window release];
     [_tabBarController release];
     [_firstNavigation release];
+    [_secondNavigation release];
     [_sinaWeibo release];
     [_locationService release];
     [super dealloc];
@@ -42,6 +44,9 @@
     self.dataes = [[[DataStore alloc] initFromFile] autorelease];
     self.sinaWeibo = [[[SinaWeiboManager alloc] init] autorelease];
     self.locationService = [[[LocationManager alloc] init] autorelease];
+    if ([self.sinaWeibo authorizationState] == AUTHORIZATION_EXPIRED) {
+        [self.dataes setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:@""];
+    }
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
@@ -50,8 +55,10 @@
     self.firstNavigation = controller;
     
     UIViewController *viewController2 = [[[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil] autorelease];
+    controller = [[[UINavigationController alloc] initWithRootViewController:viewController2] autorelease];
+    self.secondNavigation = controller;
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:self.firstNavigation, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:self.firstNavigation, self.secondNavigation, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

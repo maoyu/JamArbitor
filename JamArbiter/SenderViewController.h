@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SenderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface SenderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView * tableView;
 @property (strong, nonatomic) NSArray * weiboServiceProvider;

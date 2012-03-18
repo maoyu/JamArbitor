@@ -63,6 +63,13 @@
     return cell;
 }
 
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [actionSheet destructiveButtonIndex]) {
+        [[[[AppDelegate delegate] sinaWeibo] sinaWeiboEngine] logOut];
+    }
+}
+
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.row) {
@@ -76,14 +83,19 @@
 
 - (void)trySinaWeiboLogin{
     AppDelegate * delegate = [AppDelegate delegate];
-    NSString * screenName = [delegate.dataes parameter:SINA_WEIBO_SENDER_KEY];
-    if (nil == screenName) {
-        [delegate.sinaWeibo.sinaWeiboEngine logIn];
-    }else{
-        NSLog(@"can't, already login");
+    if (! [delegate.sinaWeibo sinaWeiboLogin:self]) {
+        NSString * userName = [delegate.dataes parameter:SINA_WEIBO_SENDER_NAME_KEY];
+        NSString * message = [NSString stringWithFormat:@"微博用户%@已经经过授权", userName];
+        UIActionSheet * sheet = [[UIActionSheet alloc] 
+                                 initWithTitle:message 
+                                 delegate:self 
+                                 cancelButtonTitle:@"什么也不做" 
+                                 destructiveButtonTitle:@"取消授权" 
+                                 otherButtonTitles:nil, 
+                                 nil];
+        [sheet showFromTabBar:delegate.tabBarController.tabBar];
+        [sheet release];
     }
-    
-    [[[AppDelegate delegate] sinaWeibo] sinaWeiboLogin:self];
 }
 
 - (void)viewDidLoad

@@ -12,10 +12,15 @@
 @interface LocationManager : NSObject <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) CLLocationManager * locationManager;
+@property (nonatomic) BOOL gotHeading;
+@property (nonatomic) BOOL gotCoordinate;
 
 - (id)init;
 
 - (void)startStandardLocationServcie;
 - (void)stopStandardLocationService;
+
+- (void)startHeadingService;
+- (void)stopHeadingService;
 
 @end

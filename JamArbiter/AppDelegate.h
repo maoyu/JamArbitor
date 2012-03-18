@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) UINavigationController * firstNavigation;
+@property (strong, nonatomic) UINavigationController * secondNavigation;
 @property (strong, nonatomic) DataStore * dataes;
 @property (strong, nonatomic) SinaWeiboManager * sinaWeibo;
 @property (strong, nonatomic) LocationManager * locationService;

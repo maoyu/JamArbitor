@@ -84,6 +84,7 @@
 }
 
 - (void)notReady:(NSString *)error{
+    [[[AppDelegate delegate] dataes] addActivity:error];
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"错误" 
                                             message:error delegate:self 
                                            cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -93,37 +94,33 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if (motion == UIEventSubtypeMotionShake) {
-        NSLog(@"got shake"); 
-        AppDelegate * delegate = [AppDelegate delegate];
         NSInteger index = [self.segment selectedSegmentIndex];
         NSString * jamState = [self.segment titleForSegmentAtIndex:index];
+        AppDelegate * delegate = [AppDelegate delegate];
+        [delegate.dataes resetActivity];
+        [delegate.dataes addActivity:@"got shake"];
         if (jamState == nil) {
             [self notReady:@"交通状态未设置"];
             return;
         }
-        NSString * sender = [delegate.dataes parameter:SINA_WEIBO_SENDER_KEY];
+
+        NSString * sender = [delegate.dataes parameter:SINA_WEIBO_SENDER_NAME_KEY];
         if (nil == sender) {
             [self notReady:@"发送者未设置"];
             return;
         }
+        
         NSString * receiver = [delegate.dataes parameter:RECEIVER_KEY];
         if (nil == receiver) {
             [self notReady:@"通知对象未设置"];
             return;
         }
         
-        NSString * safeReceiver;
-        if (! [receiver hasPrefix:@"@"]) {
-            safeReceiver = [NSString stringWithFormat:@"@%@", receiver];
-        }else{
-            safeReceiver = receiver;
-        }
+        delegate.sinaWeibo.jamState = jamState;
         
-        NSString * text = [NSString stringWithFormat:@"测试：%@ 召唤 %@", 
-                               jamState, safeReceiver];
-        delegate.sinaWeibo.weiboText = text;
-        
+        // 获取位置经纬度——将经纬度转化成地址——发送微博。
         [delegate.locationService startStandardLocationServcie];
+        [delegate.locationService startHeadingService];
     }else{
         NSLog(@"got something not shake");
     }
@@ -160,7 +157,7 @@
     if (indexPath.section == 0) {
         cell = self.cell0;
     }else if(indexPath.section == 1){
-        text = [[[AppDelegate delegate] dataes] parameter:SINA_WEIBO_SENDER_KEY];
+        text = [[[AppDelegate delegate] dataes] parameter:SINA_WEIBO_SENDER_NAME_KEY];
         if (text == nil) {
             text = @"设置我的微博账号";
         }

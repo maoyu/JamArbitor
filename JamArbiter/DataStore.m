@@ -11,23 +11,20 @@
 
 @implementation DataStore
 
-@synthesize locations = _locations;
 @synthesize parameters = _parameters;
-@synthesize standardLocations = _standardLocations;
+@synthesize logs = _logs;
+@synthesize activity = _activity;
+
+-(void)dealloc{
+    [_logs release];
+    [_activity release];
+    
+    [super dealloc];
+}
 
 - (NSString *)dataPath{
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [paths objectAtIndex:0];
-}
-
-- (NSString *)locationFilePath{
-    static NSString * kFilename = @"collectedLocations.txt";
-    return [[self dataPath] stringByAppendingPathComponent:kFilename];
-}
-
-- (NSString *)standardLocationFilePath{
-    static NSString * kFilename = @"standardCollectedLocations.txt";
-    return [[self dataPath] stringByAppendingPathComponent:kFilename];
 }
 
 - (NSString *)paramFilePath{
@@ -35,41 +32,33 @@
     return [[self dataPath] stringByAppendingPathComponent:kFilename];
 }
 
--(BOOL) addSkipBackupAttributeToFile:(NSString *)file{
-    return YES;
-    const char * filePath = [file fileSystemRepresentation];
-    const char * attrName = "com.apple.MobileBackup";
-    uint8_t attrValue = 1;
-    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
-    return result == 0;
+- (NSString *)logFilePath{
+    static NSString * kFilename = @"activityLogs.txt";
+    return [[self dataPath] stringByAppendingPathComponent:kFilename];
 }
 
 - (id)initFromFile{
     if (self = [super init]) {
         NSFileManager * manager = [NSFileManager defaultManager];
-        NSString * filePath = [self locationFilePath];
-        if ([manager fileExistsAtPath:filePath]) {
-            [self addSkipBackupAttributeToFile:filePath];
-            self.locations = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
-        }else{
-            self.locations = [[NSMutableArray alloc] init];
-        }
-        
-        filePath = [self standardLocationFilePath];
-        if ([manager fileExistsAtPath:filePath]) {
-            [self addSkipBackupAttributeToFile:filePath];
-            self.standardLocations = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
-        }else{
-            self.standardLocations = [[NSMutableArray alloc] init];
-        }
-        
+        NSString * filePath;
+            
         filePath = [self paramFilePath];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-            [self addSkipBackupAttributeToFile:filePath];
-            self.parameters = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+        if ([manager fileExistsAtPath:filePath]) {
+            self.parameters = [[[NSMutableDictionary alloc] initWithContentsOfFile:filePath] autorelease];
         }else{
             self.parameters = [[NSMutableDictionary alloc] init];
         }
+        
+        filePath = [self logFilePath];
+        if ([manager fileExistsAtPath:filePath]) {
+            self.logs = [[[NSMutableArray alloc] initWithContentsOfFile:filePath] autorelease];
+        }else{
+            self.logs = [[NSMutableArray alloc] init];
+        }
+        
+        NSMutableArray * array = [[[NSMutableArray alloc] init] autorelease];
+        self.activity = [NSMutableDictionary dictionaryWithObjectsAndKeys:array, ACTIVITY_PROCESS_KEY, 
+                         RESULT_FAILED, ACTIVITY_RESULT_KEY, nil];
     } 
     
     return self;
@@ -79,26 +68,11 @@
     BOOL ret;
     NSString * filePath;
     
-    filePath = [self locationFilePath];
-    ret = [self.locations writeToFile:filePath atomically:YES];
-    
-    filePath = [self standardLocationFilePath];     
-    ret = [self.standardLocations writeToFile:filePath atomically:YES];
-    
     filePath = [self paramFilePath];
     ret = [self.parameters writeToFile:filePath atomically:YES];
-}
-
-- (NSString *)monitoring{
-    return [self.parameters objectForKey:MONITORING_KEY];
-}
-
-- (void)setMonitoringValue:(NSString *)value{
-    if (value == nil) {
-        [self.parameters removeObjectForKey:MONITORING_KEY];
-    }else{
-        [self.parameters setValue:value forKey:MONITORING_KEY];   
-    }
+    
+    filePath = [self logFilePath];
+    ret = [self.logs writeToFile:filePath atomically:YES];
 }
 
 - (NSString *)parameter:(NSString *)key{
@@ -110,6 +84,48 @@
         [self.parameters removeObjectForKey:key];
     }else{
         [self.parameters setValue:value forKey:key];
+    }
+}
+
+-(void)resetActivity{
+    NSMutableArray * array = [self.activity objectForKey:ACTIVITY_PROCESS_KEY];
+    [array removeAllObjects];
+    
+    [self.activity setObject:RESULT_FAILED forKey:ACTIVITY_RESULT_KEY];
+}
+
+-(void)addActivity:(NSString *)activity{
+    NSLog(@"%@", activity);
+    NSMutableArray * activityArray = [self.activity objectForKey:ACTIVITY_PROCESS_KEY];
+    [activityArray addObject:activity];
+}
+
+
+-(void)setResult:(BOOL)result{
+    NSString * resultString = result ? RESULT_SUCCESSFUL : RESULT_FAILED;
+    [self.activity setObject:resultString forKey:ACTIVITY_RESULT_KEY];
+}
+
+-(void)addFailedActivity:(NSString *)activity{
+    [self addActivity:activity];
+    [self setResult:NO];
+    
+    [self.logs addObject:self.activity];
+}
+
+-(void)addSuccessfulActivity:(NSString *)activity{
+    [self addActivity:activity];
+    [self setResult:YES];
+    
+    [self.logs addObject:self.activity];
+}
+
+-(BOOL)activityResult{
+    NSString * resultString = [self.activity objectForKey:ACTIVITY_RESULT_KEY];
+    if ([resultString isEqualToString:RESULT_SUCCESSFUL]) {
+        return YES;
+    }else{
+        return NO;
     }
 }
 

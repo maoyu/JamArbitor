@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "../SinaWeiBoSDK/SinaWeiBoSDK/SinaWeiBoSDK/WBEngine.h"
 
 #define kSinaWeiboAppKey                        @"3602270595"
@@ -15,16 +16,30 @@
 #define ANNOTATIONS                             @"annotations"
 #define ANNOTATIONS_SEND_WEIBO                  @"send_weibo"
 
+#define SINA_WEIBO_SEND_METHOD                  @"statuses/update.json"
+#define SINA_WEIBO_GEO_METHOD                   @"location/geo/geo_to_address.json" 
+
+#define NOT_AUTHORIZED                               -1
+#define AUTHORIZATION_EXPIRED                        0
+#define AUTHORIZED                                   1
+
 @interface SinaWeiboManager : NSObject <WBEngineDelegate, WBRequestDelegate>
 
 @property (strong, nonatomic) WBEngine * sinaWeiboEngine;
 @property (nonatomic) double longitude;
 @property (nonatomic) double latitude;
+@property (nonatomic) double heading;
+@property (strong, nonatomic) NSString * jamState;
+@property (strong, nonatomic) NSString * address;
 @property (strong, nonatomic) NSString * weiboText;
+@property (readwrite) CFURLRef soundRef;
+@property (readonly) SystemSoundID soundId;
 
 -(id)init;
--(void)sinaWeiboLogin:(UIViewController *)topViewController;
--(void)requestScreenName;
+-(BOOL)sinaWeiboLogin:(UIViewController *)topViewController;
+-(BOOL)requestScreenName;
+-(BOOL)requestAddress;
 -(BOOL)sendWeibo;
+-(NSInteger)authorizationState;
 
 @end
