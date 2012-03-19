@@ -25,13 +25,13 @@
 
 @interface SinaWeiboManager : NSObject <WBEngineDelegate, WBRequestDelegate>
 
-@property (strong, nonatomic) WBEngine * sinaWeiboEngine;
+@property (retain, nonatomic) WBEngine * sinaWeiboEngine;
 @property (nonatomic) double longitude;
 @property (nonatomic) double latitude;
 @property (nonatomic) double heading;
-@property (strong, nonatomic) NSString * jamState;
-@property (strong, nonatomic) NSString * address;
-@property (strong, nonatomic) NSString * weiboText;
+@property (retain, nonatomic) NSString * jamState;
+@property (retain, nonatomic) NSString * address;
+@property (retain, nonatomic) NSString * weiboText;
 @property (readwrite) CFURLRef soundRef;
 @property (readonly) SystemSoundID soundId;
 

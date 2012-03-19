@@ -10,7 +10,7 @@
 
 @interface ReceiverViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITextField * textField;
+@property (retain, nonatomic) IBOutlet UITextField * textField;
 
 -(IBAction)savePressed:(id)sender;
 

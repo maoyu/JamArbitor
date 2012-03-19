@@ -19,9 +19,9 @@
 
 @interface DataStore : NSObject
 
-@property (strong, nonatomic) NSMutableDictionary * parameters;
-@property (strong, nonatomic) NSMutableArray * logs;
-@property (strong, nonatomic) NSMutableDictionary * activity;
+@property (retain, nonatomic) NSMutableDictionary * parameters;
+@property (retain, nonatomic) NSMutableArray * logs;
+@property (retain, nonatomic) NSMutableDictionary * activity;
 
 -(id)initFromFile;
 -(void)save;

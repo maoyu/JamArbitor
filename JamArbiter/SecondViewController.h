@@ -11,8 +11,8 @@
 
 @interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UITableView * tableView;
-@property (strong, nonatomic) ActivityViewControllerViewController * activityViewController;
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) ActivityViewControllerViewController * activityViewController;
 @property (nonatomic) NSInteger logCount;
 
 @end

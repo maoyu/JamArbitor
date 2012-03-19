@@ -11,7 +11,7 @@
 
 @interface LocationManager : NSObject <CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLLocationManager * locationManager;
+@property (retain, nonatomic) CLLocationManager * locationManager;
 @property (nonatomic) BOOL gotHeading;
 @property (nonatomic) BOOL gotCoordinate;
 

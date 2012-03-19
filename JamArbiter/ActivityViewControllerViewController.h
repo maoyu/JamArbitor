@@ -11,6 +11,6 @@
 @interface ActivityViewControllerViewController : UITableViewController
 
 @property (nonatomic) NSInteger logIndex;
-@property (strong, nonatomic) NSMutableArray * activities;
+@property (retain, nonatomic) NSMutableArray * activities;
 
 @end

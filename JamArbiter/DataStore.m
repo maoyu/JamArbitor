@@ -64,15 +64,19 @@
     return self;
 }
 
+- (void)saveParameters{
+    NSString * filePath = [self paramFilePath];
+    [self.parameters writeToFile:filePath atomically:YES];
+}
+
+- (void)saveLogs{
+    NSString * filePath = [self logFilePath];
+    [self.logs writeToFile:filePath atomically:YES];
+}
+
 - (void)save{
-    BOOL ret;
-    NSString * filePath;
-    
-    filePath = [self paramFilePath];
-    ret = [self.parameters writeToFile:filePath atomically:YES];
-    
-    filePath = [self logFilePath];
-    ret = [self.logs writeToFile:filePath atomically:YES];
+    [self saveParameters];
+    [self saveLogs];
 }
 
 - (NSString *)parameter:(NSString *)key{
@@ -111,6 +115,7 @@
     [self setResult:NO];
     
     [self.logs addObject:self.activity];
+    [self saveLogs];
 }
 
 -(void)addSuccessfulActivity:(NSString *)activity{
@@ -118,6 +123,7 @@
     [self setResult:YES];
     
     [self.logs addObject:self.activity];
+    [self saveLogs];
 }
 
 -(BOOL)activityResult{

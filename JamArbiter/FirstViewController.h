@@ -12,12 +12,12 @@
 
 @interface FirstViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UITableView * tableView;
-@property (strong, nonatomic) IBOutlet UITableViewCell * cell0;
-@property (strong, nonatomic) IBOutlet UITableViewCell * cell1;
-@property (strong, nonatomic) IBOutlet UITableViewCell * cell2;
-@property (strong, nonatomic) IBOutlet UISegmentedControl * segment;
-@property (strong, nonatomic) SenderViewController * senderViewController;
-@property (strong, nonatomic) ReceiverViewController * receiverViewController;
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) IBOutlet UITableViewCell * cell0;
+@property (retain, nonatomic) IBOutlet UITableViewCell * cell1;
+@property (retain, nonatomic) IBOutlet UITableViewCell * cell2;
+@property (retain, nonatomic) IBOutlet UISegmentedControl * segment;
+@property (retain, nonatomic) SenderViewController * senderViewController;
+@property (retain, nonatomic) ReceiverViewController * receiverViewController;
 
 @end

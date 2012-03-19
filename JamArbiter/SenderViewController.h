@@ -10,8 +10,8 @@
 
 @interface SenderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView * tableView;
-@property (strong, nonatomic) NSArray * weiboServiceProvider;
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) NSArray * weiboServiceProvider;
 
 - (void)trySinaWeiboLogin;
 
