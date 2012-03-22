@@ -37,6 +37,24 @@
     }
     
     self.gotCoordinate = NO;
+		AppDelegate * delegate = [AppDelegate delegate];
+		delegate.sinaWeibo.sendWeiboSign = YES;
+
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)startStandardLocationServcie:(BOOL) gotHeading{
+    if (self.locationManager == nil) {
+        [self initLocationManager];
+    }
+    
+    self.gotCoordinate = NO;
+		AppDelegate * delegate = [AppDelegate delegate];
+		delegate.sinaWeibo.sendWeiboSign = NO;
+		if(gotHeading == NO) {
+			self.gotHeading = YES;
+			
+		}
     [self.locationManager startUpdatingLocation];
 }
 
