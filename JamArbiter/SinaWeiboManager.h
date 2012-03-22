@@ -18,6 +18,8 @@
 
 #define SINA_WEIBO_SEND_METHOD                  @"statuses/update.json"
 #define SINA_WEIBO_GEO_METHOD                   @"location/geo/geo_to_address.json" 
+#define	SINA_WEIBO_SUGGESTIONS_USERS_METHOD			@"search/suggestions/users.json"
+#define SINA_WEIBO_USERS_SHOW_METHOD						@"users/show.json"
 
 #define NOT_AUTHORIZED                               -1
 #define AUTHORIZATION_EXPIRED                        0
@@ -32,14 +34,17 @@
 @property (retain, nonatomic) NSString * jamState;
 @property (retain, nonatomic) NSString * address;
 @property (retain, nonatomic) NSString * weiboText;
+@property	(retain, nonatomic) NSString * cityName;
 @property (readwrite) CFURLRef soundRef;
 @property (readonly) SystemSoundID soundId;
+@property	(nonatomic) BOOL	sendWeiboSign;
 
 -(id)init;
 -(BOOL)sinaWeiboLogin:(UIViewController *)topViewController;
 -(BOOL)requestScreenName;
 -(BOOL)requestAddress;
 -(BOOL)sendWeibo;
+-(BOOL)querySuggestionUsers;
 -(NSInteger)authorizationState;
 
 @end
