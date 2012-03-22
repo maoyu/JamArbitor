@@ -77,6 +77,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CEEFE2641519AD1300EDE3EE /* ReceiverViewRefreshUiDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverViewRefreshUiDelegate.h; sourceTree = "<group>"; };
 		E659A6891515EE2100F540B2 /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
 		E659A68E151606BE00F540B2 /* ActivityViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewControllerViewController.h; sourceTree = "<group>"; };
 		E659A68F151606BE00F540B2 /* ActivityViewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewControllerViewController.m; sourceTree = "<group>"; };
@@ -159,11 +160,11 @@
 		E68059CF1511D8D60055B06B /* SinaWeiBoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SinaWeiBoSDK.xcodeproj; sourceTree = "<group>"; };
 		E68059F71511E6A50055B06B /* ReceiverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverViewController.h; sourceTree = "<group>"; };
 		E68059F81511E6A50055B06B /* ReceiverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiverViewController.m; sourceTree = "<group>"; };
-		E68059F91511E6A50055B06B /* ReceiverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverViewController.xib; sourceTree = "<group>"; };
+		E68059F91511E6A50055B06B /* ReceiverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReceiverViewController.xib; path = JamArbiter/ReceiverViewController.xib; sourceTree = "<group>"; };
 		E6805A0615120BA90055B06B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E6805A081512C3800055B06B /* SenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenderViewController.h; sourceTree = "<group>"; };
 		E6805A091512C3800055B06B /* SenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenderViewController.m; sourceTree = "<group>"; };
-		E6805A0A1512C3800055B06B /* SenderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderViewController.xib; sourceTree = "<group>"; };
+		E6805A0A1512C3800055B06B /* SenderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SenderViewController.xib; path = JamArbiter/SenderViewController.xib; sourceTree = "<group>"; };
 		E6805A0E1512C98F0055B06B /* SinaWeiboManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboManager.h; sourceTree = "<group>"; };
 		E6805A0F1512C98F0055B06B /* SinaWeiboManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboManager.m; sourceTree = "<group>"; };
 		E6805A111512E9500055B06B /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
@@ -188,6 +189,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CEEFE2821519B0AB00EDE3EE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E68059091511C2B60055B06B /* FirstViewController.h */,
+				E680590A1511C2B60055B06B /* FirstViewController.m */,
+				E68059101511C2B60055B06B /* SecondViewController.h */,
+				E68059111511C2B60055B06B /* SecondViewController.m */,
+				E6805A081512C3800055B06B /* SenderViewController.h */,
+				E6805A091512C3800055B06B /* SenderViewController.m */,
+				E659A68E151606BE00F540B2 /* ActivityViewControllerViewController.h */,
+				E659A68F151606BE00F540B2 /* ActivityViewControllerViewController.m */,
+				E68059F71511E6A50055B06B /* ReceiverViewController.h */,
+				E68059F81511E6A50055B06B /* ReceiverViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CEEFE2831519B10300EDE3EE /* Delefate */ = {
+			isa = PBXGroup;
+			children = (
+				CEEFE2641519AD1300EDE3EE /* ReceiverViewRefreshUiDelegate.h */,
+			);
+			name = Delefate;
+			sourceTree = "<group>";
+		};
+		CEEFE2901519B12100EDE3EE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CEEFE2911519B12D00EDE3EE /* xib */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		CEEFE2911519B12D00EDE3EE /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				E68059F91511E6A50055B06B /* ReceiverViewController.xib */,
+				E6805A0A1512C3800055B06B /* SenderViewController.xib */,
+				E680591A1511C2B70055B06B /* SecondViewController.xib */,
+				E68059171511C2B60055B06B /* FirstViewController.xib */,
+			);
+			name = xib;
+			sourceTree = "<group>";
+		};
 		E659A6881515EE0400F540B2 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +244,7 @@
 		E68058E81511C2B50055B06B = {
 			isa = PBXGroup;
 			children = (
+				CEEFE2901519B12100EDE3EE /* Resource */,
 				E68059911511D8D60055B06B /* SinaWeiBoSDK */,
 				E68058FD1511C2B60055B06B /* JamArbiter */,
 				E68058F61511C2B60055B06B /* Frameworks */,
@@ -230,23 +276,11 @@
 		E68058FD1511C2B60055B06B /* JamArbiter */ = {
 			isa = PBXGroup;
 			children = (
+				CEEFE2831519B10300EDE3EE /* Delefate */,
+				CEEFE2821519B0AB00EDE3EE /* Controller */,
 				E6805A0D1512C9690055B06B /* library */,
 				E68059061511C2B60055B06B /* AppDelegate.h */,
 				E68059071511C2B60055B06B /* AppDelegate.m */,
-				E68059091511C2B60055B06B /* FirstViewController.h */,
-				E680590A1511C2B60055B06B /* FirstViewController.m */,
-				E68059171511C2B60055B06B /* FirstViewController.xib */,
-				E68059101511C2B60055B06B /* SecondViewController.h */,
-				E68059111511C2B60055B06B /* SecondViewController.m */,
-				E680591A1511C2B70055B06B /* SecondViewController.xib */,
-				E6805A081512C3800055B06B /* SenderViewController.h */,
-				E6805A091512C3800055B06B /* SenderViewController.m */,
-				E6805A0A1512C3800055B06B /* SenderViewController.xib */,
-				E68059F71511E6A50055B06B /* ReceiverViewController.h */,
-				E68059F81511E6A50055B06B /* ReceiverViewController.m */,
-				E68059F91511E6A50055B06B /* ReceiverViewController.xib */,
-				E659A68E151606BE00F540B2 /* ActivityViewControllerViewController.h */,
-				E659A68F151606BE00F540B2 /* ActivityViewControllerViewController.m */,
 				E68058FE1511C2B60055B06B /* Supporting Files */,
 			);
 			path = JamArbiter;
@@ -553,6 +587,7 @@
 				E68059181511C2B60055B06B /* en */,
 			);
 			name = FirstViewController.xib;
+			path = JamArbiter;
 			sourceTree = "<group>";
 		};
 		E680591A1511C2B70055B06B /* SecondViewController.xib */ = {
@@ -561,6 +596,7 @@
 				E680591B1511C2B70055B06B /* en */,
 			);
 			name = SecondViewController.xib;
+			path = JamArbiter;
 			sourceTree = "<group>";
 		};
 		E68059981511D8D60055B06B /* Localizable.strings */ = {
