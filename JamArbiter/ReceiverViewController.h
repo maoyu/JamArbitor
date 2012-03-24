@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReceiverViewRefreshUiDelegate.h"
 
-@interface ReceiverViewController : UIViewController
+@class ReceiverTableViewCell;
 
-@property (retain, nonatomic) IBOutlet UITextField * textField;
+@interface ReceiverViewController : UITableViewController <UITableViewDelegate,ReceiverViewRefreshUiDelegate> {
+	UIView * activityView;
+}
 
--(IBAction)savePressed:(id)sender;
+@property (retain, nonatomic) IBOutlet UIView * activityView;
+@property (nonatomic,assign) NSArray * users;
 
 @end
