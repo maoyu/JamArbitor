@@ -20,12 +20,18 @@
 @synthesize address = _address;
 @synthesize soundRef = _soundRef;
 @synthesize soundId = _soundId;
+@synthesize sendWeiboSign = _sendWeiboSign;
+@synthesize cityName = _cityName;
+@synthesize suggestionsUsers = _suggestionsUsers;
+@synthesize receiverViewDelegate = _receiverViewDelegate;
 
 - (void)dealloc{
     [_sinaWeiboEngine release];
     [_jamState release];
     [_weiboText release];
     [_address release];
+		[_cityName release];
+		[_suggestionsUsers release];
     [super dealloc];
 }
 
@@ -37,6 +43,7 @@
         [engine setIsUserExclusive:YES];
         self.sinaWeiboEngine = engine;
         [engine release];
+				self.suggestionsUsers = nil;
     }
     
     return self;
@@ -67,6 +74,35 @@
     return YES;
 }
 
+// 将经纬度数值转换成字符串，并用+-符号标示经纬度的不同方向。
+-(NSString *)coordinateToString:(double)number{
+    NSString * string = [NSString stringWithFormat:@"%f", number];
+    
+    if ([string hasPrefix:@"-"]) {
+        return string;
+    }else{
+        NSString * positiveString = [NSString stringWithFormat:@"+%@", string];
+        return positiveString;
+    }
+}
+
+-(BOOL)querySuggestionUsers{
+		if ([self authorizationState] != AUTHORIZED) {
+				return NO;
+		}
+		//FIXME 测试先写死
+		//NSString * value = [NSString stringWithFormat:@"%@交通",self.cityName];
+		NSString * value = [NSString stringWithFormat:@"%@交通",@"洛阳"];
+		NSDictionary * dictionary = [NSDictionary dictionaryWithObjectsAndKeys:value, @"q", nil];
+		[self.sinaWeiboEngine loadRequestWithMethodName:SINA_WEIBO_SUGGESTIONS_USERS_METHOD
+																			 httpMethod:@"GET" 
+																			 params:dictionary 
+																		   postDataType:kWBRequestPostDataTypeNone 
+																       httpHeaderFields:nil];
+		[[[AppDelegate delegate] dataes] addActivity:@"查询联想用户"];
+		return YES;
+}
+
 - (BOOL)requestAddress{
     if ([self authorizationState] != AUTHORIZED) {
         return NO;
@@ -82,18 +118,6 @@
                                          httpHeaderFields:nil];
     [[[AppDelegate delegate] dataes] addActivity:@"请求实际地址"];
     return YES;
-}
-
-// 将经纬度数值转换成字符串，并用+-符号标示经纬度的不同方向。
--(NSString *)coordinateToString:(double)number{
-    NSString * string = [NSString stringWithFormat:@"%f", number];
-    return string;
-    if ([string hasPrefix:@"-"]) {
-        return string;
-    }else{
-        NSString * positiveString = [NSString stringWithFormat:@"+%@", string];
-        return positiveString;
-    }
 }
 
 -(BOOL)composeWeiboText{
@@ -189,40 +213,61 @@
     [alert release];
 }
 
--(void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result{
+-(void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result currentRequest:(WBRequest *)request{
     NSLog(@"request back");
-    if ([result isKindOfClass:[NSDictionary class]]) {
-        NSDictionary * dict = (NSDictionary *)result;
-        NSString * screenName = [dict objectForKey:@"screen_name"];
-        if (nil != screenName) {
-            [[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
-            NSLog(@"got screen_name: %@", screenName);    
-        }
-        
-        NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
-        if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
-            // TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
-            [[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
-        }
-        
-        NSArray * geosArray = [dict objectForKey:@"geos"];
-        NSDictionary * geosDict = [geosArray objectAtIndex:0];
-        if ([geosDict isKindOfClass:[NSDictionary class]]) {
-            NSString * address = [geosDict objectForKey:@"address"];
-            if (address != nil) {
-                [[[AppDelegate delegate] dataes] addActivity:address];
-                self.address = address;
-                [self sendWeibo];
-            }    
-        }
-        
-        NSString * mid = [dict objectForKey:@"mid"];
-        if (mid != nil) {
-            [[[AppDelegate delegate] dataes] addSuccessfulActivity:@"微博发送成功"];
-            // TODO 发送成功，可以震动了。以后在这里自定义个delegate，通知UI层。 
-            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-        }
-    }
+		NSString * requestUrl = request.url;
+		if ([result isKindOfClass:[NSDictionary class]]) {
+				NSDictionary * dict = (NSDictionary *)result;
+				if([requestUrl hasSuffix:SINA_WEIBO_GEO_METHOD]) {
+						NSArray * geosArray = [dict objectForKey:@"geos"];
+						NSDictionary * geosDict = [geosArray objectAtIndex:0];
+						if ([geosDict isKindOfClass:[NSDictionary class]]) {
+								NSString * address = [geosDict objectForKey:@"address"];
+								NSString * cityName = [geosDict objectForKey:@"city_name"];
+								if (address != nil && cityName != nil) {
+										[[[AppDelegate delegate] dataes] addActivity:address];
+										self.address = address;
+										self.cityName = cityName;
+										if(self.sendWeiboSign ==	YES) {
+												[self sendWeibo];
+										}
+										else {
+												[self querySuggestionUsers];
+										}
+								}    
+						}
+				}
+				else if([requestUrl hasSuffix:SINA_WEIBO_SEND_METHOD]) {
+						NSString * mid = [dict objectForKey:@"mid"];
+						if (mid != nil) {
+								[[[AppDelegate delegate] dataes] addSuccessfulActivity:@"微博发送成功"];
+								// TODO 发送成功，可以震动了。以后在这里自定义个delegate，通知UI层。 
+								AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+						}
+				}else if([requestUrl hasSuffix:SINA_WEIBO_USERS_SHOW_METHOD]) {
+						NSString * screenName = [dict objectForKey:@"screen_name"];
+						if (nil != screenName) {
+								[[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
+								NSLog(@"got screen_name: %@", screenName);    
+						}
+						
+						NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
+						if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
+								// TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
+								[[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
+						}
+						
+				}
+		}
+		else if ([result isKindOfClass:[NSArray class]]){ 
+				if ([requestUrl hasSuffix:SINA_WEIBO_SUGGESTIONS_USERS_METHOD]) {
+						self.suggestionsUsers = result;
+						if ([self.receiverViewDelegate respondsToSelector:@selector(refreshUI)]) {
+								[self.receiverViewDelegate refreshUI];
+						}
+				}
+		}
+		            
 }
 
 -(void)playErrorSound{
