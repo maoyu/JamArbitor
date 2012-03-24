@@ -6,10 +6,13 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 
-@protocol ReceiverViewRefreshUiDelegate
+@protocol ReceiverViewRefreshUiDelegate <NSObject>
+
+@optional
+
 -(void) refreshUI;
 
 @end
