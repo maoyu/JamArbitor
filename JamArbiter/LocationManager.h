@@ -18,7 +18,6 @@
 - (id)init;
 
 - (void)startStandardLocationServcie;
-- (void)startStandardLocationServcie: (BOOL) gotHeading;
 - (void)stopStandardLocationService;
 
 - (void)startHeadingService;

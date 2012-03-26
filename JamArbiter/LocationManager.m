@@ -17,6 +17,12 @@
 
 - (id)init{
     if (self = [super init]) {
+				/* FIXME maoyu 12-3-26
+				 目前Heading没有用到，并且查询联想用户信息时，也会查询地理坐标信息，
+				 但获取到地理坐标信息后，会根据Heading状态进行地理描述信息查询，
+				 因此在这里先将Heading状态置为yes，并将获取heading的代码注释掉
+				*/
+				self.gotHeading = YES;
     }
     
     return self;
@@ -37,24 +43,6 @@
     }
     
     self.gotCoordinate = NO;
-		AppDelegate * delegate = [AppDelegate delegate];
-		delegate.sinaWeibo.sendWeiboSign = YES;
-
-    [self.locationManager startUpdatingLocation];
-}
-
-- (void)startStandardLocationServcie:(BOOL) gotHeading{
-    if (self.locationManager == nil) {
-        [self initLocationManager];
-    }
-    
-    self.gotCoordinate = NO;
-		AppDelegate * delegate = [AppDelegate delegate];
-		delegate.sinaWeibo.sendWeiboSign = NO;
-		if(gotHeading == NO) {
-			self.gotHeading = YES;
-			
-		}
     [self.locationManager startUpdatingLocation];
 }
 
