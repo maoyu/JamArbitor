@@ -82,7 +82,7 @@
 		CE652945151B248B00A5B07E /* ReceiverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverTableViewCell.h; sourceTree = "<group>"; };
 		CE652946151B248B00A5B07E /* ReceiverTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiverTableViewCell.m; sourceTree = "<group>"; };
 		CE652947151B248B00A5B07E /* ReceiverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ReceiverTableViewCell.xib; path = JamArbiter/ReceiverTableViewCell.xib; sourceTree = "<group>"; };
-		CEEFE2641519AD1300EDE3EE /* ReceiverViewRefreshUiDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverViewRefreshUiDelegate.h; sourceTree = "<group>"; };
+		CEEFE2641519AD1300EDE3EE /* JamArbiterUIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JamArbiterUIDelegate.h; sourceTree = "<group>"; };
 		E659A6891515EE2100F540B2 /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
 		E659A68E151606BE00F540B2 /* ActivityViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewControllerViewController.h; sourceTree = "<group>"; };
 		E659A68F151606BE00F540B2 /* ActivityViewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewControllerViewController.m; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 		CEEFE2831519B10300EDE3EE /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				CEEFE2641519AD1300EDE3EE /* ReceiverViewRefreshUiDelegate.h */,
+				CEEFE2641519AD1300EDE3EE /* JamArbiterUIDelegate.h */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
