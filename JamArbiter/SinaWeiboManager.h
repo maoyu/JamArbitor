@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "../SinaWeiBoSDK/SinaWeiBoSDK/SinaWeiBoSDK/WBEngine.h"
-#import "ReceiverViewRefreshUiDelegate.h"
+#import "JamArbiterUIDelegate.h"
 
 #define kSinaWeiboAppKey                        @"3602270595"
 #define kSinaWeiboAppSecret                     @"f50e1a9ae3a3de1827f7b973b65c68ee"
@@ -38,16 +38,16 @@
 @property	(retain, nonatomic) NSString * cityName;
 @property (readwrite) CFURLRef soundRef;
 @property (readonly) SystemSoundID soundId;
-@property	(nonatomic) BOOL	sendWeiboSign;
-@property	(retain,nonatomic) NSArray * suggestionsUsers;
-@property (nonatomic,assign) id<ReceiverViewRefreshUiDelegate> receiverViewDelegate;
+@property	(nonatomic) BOOL	sendWeibo;
+@property	(retain,nonatomic) NSArray * suggestedUsers;
+@property (nonatomic,assign) id<JamArbiterUIDelegate> UIDelegate;
 
 -(id)init;
 -(BOOL)sinaWeiboLogin:(UIViewController *)topViewController;
 -(BOOL)requestScreenName;
 -(BOOL)requestAddress;
 -(BOOL)sendWeibo;
--(BOOL)querySuggestionUsers;
+-(BOOL)querySuggestedUsers;
 -(NSInteger)authorizationState;
 
 @end

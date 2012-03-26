@@ -20,10 +20,10 @@
 @synthesize address = _address;
 @synthesize soundRef = _soundRef;
 @synthesize soundId = _soundId;
-@synthesize sendWeiboSign = _sendWeiboSign;
+@synthesize sendWeibo = _sendWeibo;
 @synthesize cityName = _cityName;
-@synthesize suggestionsUsers = _suggestionsUsers;
-@synthesize receiverViewDelegate = _receiverViewDelegate;
+@synthesize suggestedUsers = _suggestedUsers;
+@synthesize UIDelegate = _UIDelegate;
 
 - (void)dealloc{
     [_sinaWeiboEngine release];
@@ -31,7 +31,7 @@
     [_weiboText release];
     [_address release];
 		[_cityName release];
-		[_suggestionsUsers release];
+		[_suggestedUsers release];
     [super dealloc];
 }
 
@@ -43,7 +43,6 @@
         [engine setIsUserExclusive:YES];
         self.sinaWeiboEngine = engine;
         [engine release];
-				self.suggestionsUsers = nil;
     }
     
     return self;
@@ -86,7 +85,7 @@
     }
 }
 
--(BOOL)querySuggestionUsers{
+-(BOOL)querySuggestedUsers{
 		if ([self authorizationState] != AUTHORIZED) {
 				return NO;
 		}
@@ -213,7 +212,7 @@
     [alert release];
 }
 
--(void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result currentRequest:(WBRequest *)request{
+-(void)engine:(WBEngine *)engine requestDidSucceed:(WBRequest *)request WithResult:(id)result{
     NSLog(@"request back");
 		NSString * requestUrl = request.url;
 		if ([result isKindOfClass:[NSDictionary class]]) {
@@ -228,11 +227,11 @@
 										[[[AppDelegate delegate] dataes] addActivity:address];
 										self.address = address;
 										self.cityName = cityName;
-										if(self.sendWeiboSign ==	YES) {
+										if(self.sendWeibo ==	YES) {
 												[self sendWeibo];
 										}
 										else {
-												[self querySuggestionUsers];
+												[self querySuggestedUsers];
 										}
 								}    
 						}
@@ -261,9 +260,9 @@
 		}
 		else if ([result isKindOfClass:[NSArray class]]){ 
 				if ([requestUrl hasSuffix:SINA_WEIBO_SUGGESTIONS_USERS_METHOD]) {
-						self.suggestionsUsers = result;
-						if ([self.receiverViewDelegate respondsToSelector:@selector(refreshUI)]) {
-								[self.receiverViewDelegate refreshUI];
+						self.suggestedUsers = result;
+						if ([self.UIDelegate respondsToSelector:@selector(handleMsg:)]) {
+								[self.UIDelegate handleMsg:MSG_TYPE_SINA_WEIBO_SUGGESTIONS_USERS_OK];
 						}
 				}
 		}
