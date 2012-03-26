@@ -117,10 +117,11 @@
         }
         
         delegate.sinaWeibo.jamState = jamState;
+				delegate.sinaWeibo.sendWeibo = YES;
         
         // 获取位置经纬度——将经纬度转化成地址——发送微博。
         [delegate.locationService startStandardLocationServcie];
-        [delegate.locationService startHeadingService];
+        //[delegate.locationService startHeadingService];
     }else{
         NSLog(@"got something not shake");
     }
