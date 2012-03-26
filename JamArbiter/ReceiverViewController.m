@@ -13,7 +13,7 @@
 @implementation ReceiverViewController
 
 @synthesize activityView = _activityView;
-@synthesize users = _users;
+@synthesize suggestedUsers = _suggestedUsers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,10 +32,11 @@
 {
     [super viewDidLoad];
 		AppDelegate * delegate = [AppDelegate delegate];
-		delegate.sinaWeibo.receiverViewDelegate = self;
-		//[delegate.locationService startStandardLocationServcie:NO];
-		[delegate.sinaWeibo querySuggestionUsers];
-		self.users = nil;
+		delegate.sinaWeibo.UIDelegate = self;
+		delegate.sinaWeibo.sendWeibo = NO;
+		//[delegate.locationService startStandardLocationServcie];
+		[delegate.sinaWeibo querySuggestedUsers];
+		self.suggestedUsers = nil;
 }
 
 - (void)viewDidUnload
@@ -50,22 +51,20 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)savePressed:(id)sender{
-    /*NSString * text = self.textField.text;
-    if (text == nil) {
-        return;
-    }
-    
-    DataStore * store = [[AppDelegate delegate] dataes];
-    [store setParameter:RECEIVER_KEY withValue:text];
-    [self.navigationController popViewControllerAnimated:YES];
-	*/
+-(void)refreshUI {
+		[self.tableView reloadData];
 }
 
 #pragma mark -
-#pragma mark ReceiverViewRefreshUiDelegate methods
--(void)refreshUI {
-		[self.tableView reloadData];
+#pragma mark JamArbiterUIDelegate methods
+-(void)handleMsg:(int)msgWhat {
+		switch (msgWhat) {
+				case MSG_TYPE_SINA_WEIBO_SUGGESTIONS_USERS_OK:
+						[self refreshUI];
+						break;
+				default:
+						break;
+		}
 }
 
 #pragma mark -
@@ -73,15 +72,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 		AppDelegate * delegate = [AppDelegate delegate];
-		if(delegate.sinaWeibo.suggestionsUsers != nil) {
-				self.users = delegate.sinaWeibo.suggestionsUsers;
-				return [self.users count];
+		if(delegate.sinaWeibo.suggestedUsers != nil) {
+				self.suggestedUsers = delegate.sinaWeibo.suggestedUsers;
+				return [self.suggestedUsers count];
 		}
 		return 0;
 }
@@ -101,7 +99,7 @@
 				cell = (ReceiverTableViewCell *)[topLevelObjects objectAtIndex:0];
     }
     
-		NSDictionary * user = [self.users objectAtIndex:indexPath.row];
+		id user = [self.suggestedUsers objectAtIndex:indexPath.row];
 		if ([user isKindOfClass:[NSDictionary class]]) {
 				cell.userNameLabel.text = [user objectForKey:@"screen_name"];
 		}
@@ -111,12 +109,12 @@
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 		
-		if (self.users == nil) {
+		if (self.suggestedUsers == nil) {
 				return nil;
 		}
 		 
 		DataStore * store = [[AppDelegate delegate] dataes];
-		NSString * userName = [[self.users objectAtIndex:indexPath.row] objectForKey:@"screen_name"];
+		NSString * userName = [[self.suggestedUsers objectAtIndex:indexPath.row] objectForKey:@"screen_name"];
 		[store setParameter:RECEIVER_KEY withValue:userName];
 		[self.navigationController popViewControllerAnimated:YES];
 		return indexPath;

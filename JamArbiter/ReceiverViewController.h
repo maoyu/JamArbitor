@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ReceiverViewRefreshUiDelegate.h"
+#import "JamArbiterUIDelegate.h"
 
 @class ReceiverTableViewCell;
 
-@interface ReceiverViewController : UITableViewController <UITableViewDelegate,ReceiverViewRefreshUiDelegate> {
-	UIView * activityView;
-}
+@interface ReceiverViewController : UITableViewController <UITableViewDelegate,JamArbiterUIDelegate>
 
-@property (retain, nonatomic) IBOutlet UIView * activityView;
-@property (nonatomic,assign) NSArray * users;
+		@property (retain, nonatomic) IBOutlet UIView * activityView;
+		@property (nonatomic,assign) NSArray * suggestedUsers;
 
 @end
