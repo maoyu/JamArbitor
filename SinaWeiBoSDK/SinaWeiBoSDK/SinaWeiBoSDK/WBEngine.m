@@ -322,9 +322,9 @@
 
 - (void)request:(WBRequest *)request didFinishLoadingWithResult:(id)result
 {
-    if ([delegate respondsToSelector:@selector(engine:requestDidSucceedWithResult: currentRequest:)])
+    if ([delegate respondsToSelector:@selector(engine:requestDidSucceed: WithResult:)])
     {
-			[delegate engine:self requestDidSucceedWithResult:result currentRequest:request];
+				[delegate engine:self requestDidSucceed:request WithResult:result];
     }
 }
 
