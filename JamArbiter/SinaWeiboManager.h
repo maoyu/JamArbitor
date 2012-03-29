@@ -49,11 +49,7 @@
 -(BOOL)requestProfileImageUrl:(NSString *) screenName;
 -(BOOL)requestAddress;
 -(BOOL)sendWeibo;
-<<<<<<< HEAD
--(BOOL)querySuggestionUsers;
-=======
 -(BOOL)querySuggestedUsers;
->>>>>>> maoyu/master
 -(NSInteger)authorizationState;
 
 @end
