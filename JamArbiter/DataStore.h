@@ -10,6 +10,7 @@
 
 #define SINA_WEIBO_SENDER_NAME_KEY          @"sina-weibo-sender-key"
 #define RECEIVER_KEY                        @"receiver-key"
+#define RECEIVER_IMAGE											@"receiver-image"
 
 #define ACTIVITY_PROCESS_KEY                @"activity-process"
 #define ACTIVITY_RESULT_KEY                 @"activity-result"
