@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "../SinaWeiBoSDK/SinaWeiBoSDK/SinaWeiBoSDK/WBEngine.h"
+#import "JamArbiterUIDelegate.h"
 
 #define kSinaWeiboAppKey                        @"3602270595"
 #define kSinaWeiboAppSecret                     @"f50e1a9ae3a3de1827f7b973b65c68ee"
@@ -37,14 +38,22 @@
 @property	(retain, nonatomic) NSString * cityName;
 @property (readwrite) CFURLRef soundRef;
 @property (readonly) SystemSoundID soundId;
-@property	(nonatomic) BOOL	sendWeiboSign;
+@property	(nonatomic) BOOL	sendWeibo;
+@property (nonatomic) BOOL	senderInfoRequest;
+@property	(retain,nonatomic) NSArray * suggestedUsers;
+@property (nonatomic,assign) id<JamArbiterUIDelegate> UIDelegate;
 
 -(id)init;
 -(BOOL)sinaWeiboLogin:(UIViewController *)topViewController;
 -(BOOL)requestScreenName;
+-(BOOL)requestProfileImageUrl:(NSString *) screenName;
 -(BOOL)requestAddress;
 -(BOOL)sendWeibo;
+<<<<<<< HEAD
 -(BOOL)querySuggestionUsers;
+=======
+-(BOOL)querySuggestedUsers;
+>>>>>>> maoyu/master
 -(NSInteger)authorizationState;
 
 @end

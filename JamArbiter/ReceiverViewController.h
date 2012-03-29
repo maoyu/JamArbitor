@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JamArbiterUIDelegate.h"
 
-@interface ReceiverViewController : UIViewController
+@class ReceiverTableViewCell;
 
-@property (retain, nonatomic) IBOutlet UITextField * textField;
+@interface ReceiverViewController : UITableViewController <UITableViewDelegate,JamArbiterUIDelegate>
 
--(IBAction)savePressed:(id)sender;
+		@property (retain, nonatomic) IBOutlet UIView * activityView;
+		@property (nonatomic,assign) NSArray * suggestedUsers;
 
 @end

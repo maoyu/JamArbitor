@@ -20,8 +20,11 @@
 @synthesize address = _address;
 @synthesize soundRef = _soundRef;
 @synthesize soundId = _soundId;
-@synthesize sendWeiboSign = _sendWeiboSign;
+@synthesize sendWeibo = _sendWeibo;
 @synthesize cityName = _cityName;
+@synthesize suggestedUsers = _suggestedUsers;
+@synthesize UIDelegate = _UIDelegate;
+@synthesize senderInfoRequest = _senderInfoRequest;
 
 - (void)dealloc{
     [_sinaWeiboEngine release];
@@ -29,6 +32,7 @@
     [_weiboText release];
     [_address release];
 		[_cityName release];
+		[_suggestedUsers release];
     [super dealloc];
 }
 
@@ -70,6 +74,20 @@
     return YES;
 }
 
+// 获取微博用户信息
+-(BOOL)requestProfileImageUrl:(NSString *) screenName{
+		if ([self authorizationState] != AUTHORIZED) {
+        return NO;
+    }
+		
+		NSDictionary * dictionary = [NSDictionary dictionaryWithObject:screenName forKey:@"screen_name"];
+    [self.sinaWeiboEngine loadRequestWithMethodName:@"users/show.json" 
+																				 httpMethod:@"GET" params:dictionary 
+																				 postDataType:kWBRequestPostDataTypeNone 
+																				 httpHeaderFields:nil];
+    return YES;
+}
+
 // 将经纬度数值转换成字符串，并用+-符号标示经纬度的不同方向。
 -(NSString *)coordinateToString:(double)number{
     NSString * string = [NSString stringWithFormat:@"%f", number];
@@ -82,7 +100,7 @@
     }
 }
 
--(BOOL)querySuggestionUsers{
+-(BOOL)querySuggestedUsers{
 		if ([self authorizationState] != AUTHORIZED) {
 				return NO;
 		}
@@ -196,6 +214,7 @@
     [alert release];
         
     // 请求用户信息，目标：用户昵称，用户是否开启地理位置共享。
+		self.senderInfoRequest = YES;
     [self requestScreenName];
 }
 
@@ -209,15 +228,12 @@
     [alert release];
 }
 
--(void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result currentRequest:(WBRequest *)request{
+-(void)engine:(WBEngine *)engine requestDidSucceed:(WBRequest *)request WithResult:(id)result{
     NSLog(@"request back");
+		NSString * requestUrl = request.url;
 		if ([result isKindOfClass:[NSDictionary class]]) {
 				NSDictionary * dict = (NSDictionary *)result;
-				NSString * requestUrl = request.url;
-				if ([requestUrl hasSuffix:SINA_WEIBO_SUGGESTIONS_USERS_METHOD]) {
-						//FIXME 添加后续处理
-				}
-				else if([requestUrl hasSuffix:SINA_WEIBO_GEO_METHOD]) {
+				if([requestUrl hasSuffix:SINA_WEIBO_GEO_METHOD]) {
 						NSArray * geosArray = [dict objectForKey:@"geos"];
 						NSDictionary * geosDict = [geosArray objectAtIndex:0];
 						if ([geosDict isKindOfClass:[NSDictionary class]]) {
@@ -227,11 +243,11 @@
 										[[[AppDelegate delegate] dataes] addActivity:address];
 										self.address = address;
 										self.cityName = cityName;
-										if(self.sendWeiboSign ==	YES) {
+										if(self.sendWeibo ==	YES) {
 												[self sendWeibo];
 										}
 										else {
-												[self querySuggestionUsers];
+												[self querySuggestedUsers];
 										}
 								}    
 						}
@@ -245,17 +261,35 @@
 						}
 				}else if([requestUrl hasSuffix:SINA_WEIBO_USERS_SHOW_METHOD]) {
 						NSString * screenName = [dict objectForKey:@"screen_name"];
-						if (nil != screenName) {
-								[[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
-								NSLog(@"got screen_name: %@", screenName);    
+						if(self.senderInfoRequest) {
+								if (nil != screenName) {
+										[[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
+										NSLog(@"got screen_name: %@", screenName);    
+								}
+								
+								NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
+								if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
+										// TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
+										[[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
+								}
 						}
-						
-						NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
-						if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
-								// TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
-								[[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
+						else {
+								NSString * imageUrl = [dict objectForKey:@"profile_image_url"];
+								if(nil != imageUrl) {
+										[[[AppDelegate delegate] dataes] setParameter:RECEIVER_IMAGE withValue:imageUrl];
+										if ([self.UIDelegate respondsToSelector:@selector(handleMsg:)]) {
+												[self.UIDelegate handleMsg:MSG_TYPE_SINA_WEIBO_PROFILE_IMAGE_URL_OK];
+										}
+								}
 						}
-						
+				}
+		}
+		else if ([result isKindOfClass:[NSArray class]]){ 
+				if ([requestUrl hasSuffix:SINA_WEIBO_SUGGESTIONS_USERS_METHOD]) {
+						self.suggestedUsers = result;
+						if ([self.UIDelegate respondsToSelector:@selector(handleMsg:)]) {
+								[self.UIDelegate handleMsg:MSG_TYPE_SINA_WEIBO_SUGGESTIONS_USERS_OK];
+						}
 				}
 		}
 		            

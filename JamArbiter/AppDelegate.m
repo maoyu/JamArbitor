@@ -23,6 +23,7 @@
 @synthesize dataes = _dataes;
 @synthesize sinaWeibo = _sinaWeibo;
 @synthesize locationService = _locationService;
+@synthesize imageManager = _imageManager;
 
 - (void)dealloc
 {
@@ -32,6 +33,7 @@
     [_secondNavigation release];
     [_sinaWeibo release];
     [_locationService release];
+		[_imageManager release];
     [super dealloc];
 }
 
@@ -44,6 +46,7 @@
     self.dataes = [[[DataStore alloc] initFromFile] autorelease];
     self.sinaWeibo = [[[SinaWeiboManager alloc] init] autorelease];
     self.locationService = [[[LocationManager alloc] init] autorelease];
+		self.imageManager = [[[ImageManager alloc] init] autorelease];
     if ([self.sinaWeibo authorizationState] == AUTHORIZATION_EXPIRED) {
         [self.dataes setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:@""];
     }

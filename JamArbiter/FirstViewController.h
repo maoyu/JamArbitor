@@ -10,12 +10,14 @@
 #import "SenderViewController.h"
 #import "ReceiverViewController.h"
 
-@interface FirstViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@class FirstViewTableViewCell;
+
+@interface FirstViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,JamArbiterUIDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView * tableView;
 @property (retain, nonatomic) IBOutlet UITableViewCell * cell0;
 @property (retain, nonatomic) IBOutlet UITableViewCell * cell1;
-@property (retain, nonatomic) IBOutlet UITableViewCell * cell2;
+@property (retain, nonatomic) FirstViewTableViewCell * cell2;
 @property (retain, nonatomic) IBOutlet UISegmentedControl * segment;
 @property (retain, nonatomic) SenderViewController * senderViewController;
 @property (retain, nonatomic) ReceiverViewController * receiverViewController;

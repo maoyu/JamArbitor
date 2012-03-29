@@ -10,6 +10,7 @@
 #import "DataStore.h"
 #import "SinaWeiboManager.h"
 #import "LocationManager.h"
+#import "ImageManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
@@ -20,6 +21,7 @@
 @property (retain, nonatomic) DataStore * dataes;
 @property (retain, nonatomic) SinaWeiboManager * sinaWeibo;
 @property (retain, nonatomic) LocationManager * locationService;
+@property (retain, nonatomic) ImageManager * imageManager;
 
 +(AppDelegate *)delegate;
 

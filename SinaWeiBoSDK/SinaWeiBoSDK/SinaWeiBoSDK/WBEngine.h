@@ -51,7 +51,7 @@
 - (void)engineAuthorizeExpired:(WBEngine *)engine;
 
 - (void)engine:(WBEngine *)engine requestDidFailWithError:(NSError *)error;
-- (void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result currentRequest:(WBRequest *)request;
+- (void)engine:(WBEngine *)engine requestDidSucceed:(WBRequest *) request WithResult:(id)result;
 
 @end
 
