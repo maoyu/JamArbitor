@@ -24,6 +24,7 @@
 @synthesize cityName = _cityName;
 @synthesize suggestedUsers = _suggestedUsers;
 @synthesize UIDelegate = _UIDelegate;
+@synthesize senderInfoRequest = _senderInfoRequest;
 
 - (void)dealloc{
     [_sinaWeiboEngine release];
@@ -70,6 +71,20 @@
                                    httpMethod:@"GET" params:dictionary 
                                    postDataType:kWBRequestPostDataTypeNone 
                                    httpHeaderFields:nil];
+    return YES;
+}
+
+// 获取微博用户信息
+-(BOOL)requestProfileImageUrl:(NSString *) screenName{
+		if ([self authorizationState] != AUTHORIZED) {
+        return NO;
+    }
+		
+		NSDictionary * dictionary = [NSDictionary dictionaryWithObject:screenName forKey:@"screen_name"];
+    [self.sinaWeiboEngine loadRequestWithMethodName:@"users/show.json" 
+																				 httpMethod:@"GET" params:dictionary 
+																				 postDataType:kWBRequestPostDataTypeNone 
+																				 httpHeaderFields:nil];
     return YES;
 }
 
@@ -199,6 +214,7 @@
     [alert release];
         
     // 请求用户信息，目标：用户昵称，用户是否开启地理位置共享。
+		self.senderInfoRequest = YES;
     [self requestScreenName];
 }
 
@@ -245,17 +261,27 @@
 						}
 				}else if([requestUrl hasSuffix:SINA_WEIBO_USERS_SHOW_METHOD]) {
 						NSString * screenName = [dict objectForKey:@"screen_name"];
-						if (nil != screenName) {
-								[[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
-								NSLog(@"got screen_name: %@", screenName);    
+						if(self.senderInfoRequest) {
+								if (nil != screenName) {
+										[[[AppDelegate delegate] dataes] setParameter:SINA_WEIBO_SENDER_NAME_KEY withValue:screenName];
+										NSLog(@"got screen_name: %@", screenName);    
+								}
+								
+								NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
+								if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
+										// TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
+										[[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
+								}
 						}
-						
-						NSNumber * geoEnabled = [dict objectForKey:@"geo_enabled"];
-						if (geoEnabled != nil && [geoEnabled integerValue] == 0) {
-								// TODO 地理信息未开时提示到微博中设置。或帮助自动设置？
-								[[[AppDelegate delegate] dataes] addActivity:@"地理位置共享未开启"];
+						else {
+								NSString * imageUrl = [dict objectForKey:@"profile_image_url"];
+								if(nil != imageUrl) {
+										[[[AppDelegate delegate] dataes] setParameter:RECEIVER_IMAGE withValue:imageUrl];
+										if ([self.UIDelegate respondsToSelector:@selector(handleMsg:)]) {
+												[self.UIDelegate handleMsg:MSG_TYPE_SINA_WEIBO_PROFILE_IMAGE_URL_OK];
+										}
+								}
 						}
-						
 				}
 		}
 		else if ([result isKindOfClass:[NSArray class]]){ 

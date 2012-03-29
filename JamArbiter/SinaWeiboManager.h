@@ -39,12 +39,14 @@
 @property (readwrite) CFURLRef soundRef;
 @property (readonly) SystemSoundID soundId;
 @property	(nonatomic) BOOL	sendWeibo;
+@property (nonatomic) BOOL	senderInfoRequest;
 @property	(retain,nonatomic) NSArray * suggestedUsers;
 @property (nonatomic,assign) id<JamArbiterUIDelegate> UIDelegate;
 
 -(id)init;
 -(BOOL)sinaWeiboLogin:(UIViewController *)topViewController;
 -(BOOL)requestScreenName;
+-(BOOL)requestProfileImageUrl:(NSString *) screenName;
 -(BOOL)requestAddress;
 -(BOOL)sendWeibo;
 -(BOOL)querySuggestedUsers;
