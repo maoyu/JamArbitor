@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		CE652948151B248B00A5B07E /* ReceiverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE652946151B248B00A5B07E /* ReceiverTableViewCell.m */; };
 		CE652949151B248B00A5B07E /* ReceiverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE652947151B248B00A5B07E /* ReceiverTableViewCell.xib */; };
+		CE80807315215F93002CA131 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = CE80807115215F93002CA131 /* user.png */; };
+		CE8080CD15216936002CA131 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8080CC15216936002CA131 /* ImageManager.m */; };
+		CEB6C2611522A78E00CFC43B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB6C2601522A78E00CFC43B /* QuartzCore.framework */; };
+		CEB6C28B1522AEA600CFC43B /* FirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB6C28A1522AEA600CFC43B /* FirstViewTableViewCell.m */; };
 		E659A68A1515EE2100F540B2 /* tap.aif in Resources */ = {isa = PBXBuildFile; fileRef = E659A6891515EE2100F540B2 /* tap.aif */; };
 		E659A690151606BE00F540B2 /* ActivityViewControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E659A68F151606BE00F540B2 /* ActivityViewControllerViewController.m */; };
 		E68058F81511C2B60055B06B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68058F71511C2B60055B06B /* UIKit.framework */; };
@@ -82,6 +86,12 @@
 		CE652945151B248B00A5B07E /* ReceiverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverTableViewCell.h; sourceTree = "<group>"; };
 		CE652946151B248B00A5B07E /* ReceiverTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiverTableViewCell.m; sourceTree = "<group>"; };
 		CE652947151B248B00A5B07E /* ReceiverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ReceiverTableViewCell.xib; path = JamArbiter/ReceiverTableViewCell.xib; sourceTree = "<group>"; };
+		CE80807115215F93002CA131 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = assets/user.png; sourceTree = "<group>"; };
+		CE8080CB15216936002CA131 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		CE8080CC15216936002CA131 /* ImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageManager.m; sourceTree = "<group>"; };
+		CEB6C2601522A78E00CFC43B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CEB6C2891522AEA600CFC43B /* FirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewTableViewCell.h; sourceTree = "<group>"; };
+		CEB6C28A1522AEA600CFC43B /* FirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewTableViewCell.m; sourceTree = "<group>"; };
 		CEEFE2641519AD1300EDE3EE /* JamArbiterUIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JamArbiterUIDelegate.h; sourceTree = "<group>"; };
 		E659A6891515EE2100F540B2 /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
 		E659A68E151606BE00F540B2 /* ActivityViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewControllerViewController.h; sourceTree = "<group>"; };
@@ -188,6 +198,7 @@
 				E68058F81511C2B60055B06B /* UIKit.framework in Frameworks */,
 				E68058FA1511C2B60055B06B /* Foundation.framework in Frameworks */,
 				E68058FC1511C2B60055B06B /* CoreGraphics.framework in Frameworks */,
+				CEB6C2611522A78E00CFC43B /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,8 +210,26 @@
 			children = (
 				CE652945151B248B00A5B07E /* ReceiverTableViewCell.h */,
 				CE652946151B248B00A5B07E /* ReceiverTableViewCell.m */,
+				CEB6C2891522AEA600CFC43B /* FirstViewTableViewCell.h */,
+				CEB6C28A1522AEA600CFC43B /* FirstViewTableViewCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		CE80806115215DED002CA131 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				CE80806215215DFA002CA131 /* image */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		CE80806215215DFA002CA131 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				CE80807115215F93002CA131 /* user.png */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 		CEEFE2821519B0AB00EDE3EE /* Controller */ = {
@@ -231,6 +260,7 @@
 		CEEFE2901519B12100EDE3EE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				CE80806115215DED002CA131 /* assets */,
 				CEEFE2911519B12D00EDE3EE /* xib */,
 			);
 			name = Resource;
@@ -278,6 +308,7 @@
 		E68058F61511C2B60055B06B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEB6C2601522A78E00CFC43B /* QuartzCore.framework */,
 				E6805A0615120BA90055B06B /* AudioToolbox.framework */,
 				E6805A141512EAAE0055B06B /* CoreLocation.framework */,
 				E68059251511D71A0055B06B /* Security.framework */,
@@ -450,6 +481,8 @@
 				E6805A0F1512C98F0055B06B /* SinaWeiboManager.m */,
 				E6805A111512E9500055B06B /* LocationManager.h */,
 				E6805A121512E9500055B06B /* LocationManager.m */,
+				CE8080CB15216936002CA131 /* ImageManager.h */,
+				CE8080CC15216936002CA131 /* ImageManager.m */,
 			);
 			name = library;
 			sourceTree = "<group>";
@@ -548,6 +581,7 @@
 				E6805A0C1512C3800055B06B /* SenderViewController.xib in Resources */,
 				E659A68A1515EE2100F540B2 /* tap.aif in Resources */,
 				CE652949151B248B00A5B07E /* ReceiverTableViewCell.xib in Resources */,
+				CE80807315215F93002CA131 /* user.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,6 +619,8 @@
 				E6805A131512E9500055B06B /* LocationManager.m in Sources */,
 				E659A690151606BE00F540B2 /* ActivityViewControllerViewController.m in Sources */,
 				CE652948151B248B00A5B07E /* ReceiverTableViewCell.m in Sources */,
+				CE8080CD15216936002CA131 /* ImageManager.m in Sources */,
+				CEB6C28B1522AEA600CFC43B /* FirstViewTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
