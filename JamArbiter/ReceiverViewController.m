@@ -25,25 +25,45 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-        [self setTitle:@"发送对象"];
+		[self setTitle:@"发送对象"];
+		AppDelegate * delegate = [AppDelegate delegate];
+		if(delegate.sinaWeibo.suggestedUsers != nil) {
+				self.suggestedUsers = delegate.sinaWeibo.suggestedUsers;
+		}
+		else {
+				delegate.sinaWeibo.UIDelegate = self;
+				delegate.sinaWeibo.sendWeibo = NO;
+				//FIXME 模拟器不能定位
+				//[delegate.locationService startStandardLocationServcie];
+				[delegate.sinaWeibo querySuggestedUsers];
+		}
+		
+	}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-		AppDelegate * delegate = [AppDelegate delegate];
-		delegate.sinaWeibo.UIDelegate = self;
-		delegate.sinaWeibo.sendWeibo = NO;
-		//[delegate.locationService startStandardLocationServcie];
-		[delegate.sinaWeibo querySuggestedUsers];
-		self.suggestedUsers = nil;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
+-(void) dealloc{
+		[_activityView release];
+		[super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -52,6 +72,10 @@
 }
 
 -(void)refreshUI {
+		AppDelegate * delegate = [AppDelegate delegate];
+		if(delegate.sinaWeibo.suggestedUsers != nil) {
+				self.suggestedUsers = delegate.sinaWeibo.suggestedUsers;
+		}
 		[self.tableView reloadData];
 }
 
@@ -76,9 +100,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-		AppDelegate * delegate = [AppDelegate delegate];
-		if(delegate.sinaWeibo.suggestedUsers != nil) {
-				self.suggestedUsers = delegate.sinaWeibo.suggestedUsers;
+		
+		if(self.suggestedUsers != nil) {
 				return [self.suggestedUsers count];
 		}
 		return 0;
@@ -116,6 +139,8 @@
 		DataStore * store = [[AppDelegate delegate] dataes];
 		NSString * userName = [[self.suggestedUsers objectAtIndex:indexPath.row] objectForKey:@"screen_name"];
 		[store setParameter:RECEIVER_KEY withValue:userName];
+		[[[AppDelegate delegate] imageManager] deleteImage];
+		
 		[self.navigationController popViewControllerAnimated:YES];
 		return indexPath;
 }
