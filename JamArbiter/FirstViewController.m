@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "AppDelegate.h"
+#import "FirstViewTableViewCell.h"
 
 @interface FirstViewController ()
 
@@ -27,7 +28,7 @@
     [_tableView release];
     [_cell0 release];
     [_cell1 release];
-    [_cell2 release];
+		[_cell2 release];
     [_segment release];
     [_senderViewController release];
     [_receiverViewController release];
@@ -41,11 +42,15 @@
     if (self) {
         self.title = NSLocalizedString(@"First", @"First");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
+				self.cell2 = [[FirstViewTableViewCell alloc] init];
     }
     return self;
 }
 
--(void) viewWillAppear:(BOOL)animated{    
+-(void) viewWillAppear:(BOOL)animated{  
+		AppDelegate * delegate = [AppDelegate delegate];
+		delegate.imageManager.UIDelegate = self;
+		delegate.sinaWeibo.UIDelegate = self;
     [self.tableView reloadData];
 }
 
@@ -152,9 +157,11 @@
     return number;
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString * text = nil;
     UITableViewCell * cell = nil;
+		UIImage * receiverImage = nil;
     if (indexPath.section == 0) {
         cell = self.cell0;
     }else if(indexPath.section == 1){
@@ -165,12 +172,31 @@
         cell = self.cell1;
         cell.textLabel.text = text;        
     }else if(indexPath.section == 2){
-        text = [[[AppDelegate delegate] dataes] parameter:RECEIVER_KEY];
+				cell = self.cell2;
+				text = [[[AppDelegate delegate] dataes] parameter:RECEIVER_KEY];
         if (nil == text) {
             text = @"设置微博发送对象";
+						receiverImage = [UIImage imageNamed:@"user.png"];
+						cell.imageView.image = receiverImage;
         }
-        cell = self.cell2;
-        cell.textLabel.text = text;        
+				else {
+
+						if ([[[AppDelegate delegate] imageManager] fileExistsAtName:@"receiver.png"]) {
+								NSString  * path = [NSString stringWithFormat:@"%@/receiver.png",[[[AppDelegate delegate] imageManager] dataPath]];
+								receiverImage = [[UIImage alloc] init];
+								receiverImage = [receiverImage initWithContentsOfFile:path];
+								cell.imageView.image = receiverImage;
+								[receiverImage release];
+						}
+						else {
+								[[AppDelegate delegate] sinaWeibo].senderInfoRequest = NO;
+								[[[AppDelegate delegate] sinaWeibo] requestProfileImageUrl:text];
+								receiverImage = [UIImage imageNamed:@"user.png"];
+								cell.imageView.image = receiverImage;
+						}
+
+				}
+				cell.textLabel.text = text;
     }
     
     return cell;
@@ -219,5 +245,21 @@
     }
 }
 
+#pragma mark -
+#pragma mark JamArbiterUIDelegate methods
+-(void)handleMsg:(int)msgWhat {
+		NSString * url;
+		switch (msgWhat) {
+				case MSG_TYPE_SINA_WEIBO_PROFILE_IMAGE_URL_OK:
+						url = [[[AppDelegate delegate] dataes] parameter:RECEIVER_IMAGE];
+						[[[AppDelegate delegate] imageManager] loadImage:url];
+						break;
+				case MSG_TYPE_SINA_WEIBO_PROFILE_IMAGE_DOWNLOAD_OK:
+						[self.tableView reloadData];
+						break;
+				default:
+						break;
+		}
+}
 
 @end
